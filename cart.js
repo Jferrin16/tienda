@@ -2,7 +2,7 @@ const products = [
   {
     id: 1,
     name: "Encebollado",
-    price: 2.5,
+    price: 3.5,
     image: "encebollado.jpg",
     inStock: false,
   },
