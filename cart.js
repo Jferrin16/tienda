@@ -20,6 +20,27 @@ const products = [
     image: "arroz-marinero.png",
     inStock: true,
   },
+  {
+    id: 4,
+    name: "Pescado Frito",
+    price: 5.5,
+    image: "pescadofrito.jpg",
+    inStock: true,
+  },
+  {
+    id: 5,
+    name: "Encocado de Pescado",
+    price: 6.5,
+    image: "pescado_encocado.jpg",
+    inStock: true,
+  },
+  {
+    id: 6,
+    name: "Filete de Pescado",
+    price: 8,
+    image: "filete_de_pescado.jpg",
+    inStock: true,
+  },
 ];
 
 const productList = document.getElementById("product-list");
