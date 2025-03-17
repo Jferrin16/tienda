@@ -45,33 +45,7 @@ const products = [
 
 const productList = document.getElementById("product-list");
 function loadProducts() {
-  let list = "";
-
-  products.forEach((product) => {
-    const item = `<div class="border ${
-      product.inStock ? "" : "grayscale"
-    } border-gray-300 rounded-lg overflow-hidden">
-                <img class="aspect-video" src="images/${product.image}" alt="${
-      product.name
-    }">
-                <div class="p-2">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-lg font-bold text-gray-900">${
-                          product.name
-                        }</h2>
-                        <p class="text-green-600">$${product.price.toFixed(
-                          2
-                        )}</p>
-                    </div>
-                    
-                    <button id="${
-                      product.id
-                    }" class="product-button rounded-md bg-indigo-600 px-2 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add to Cart</button>
-                </div>
-            </div>`;
-
-    list += item;
-  });
+  let list = renderItems(products);
 
   productList.innerHTML = list;
 }
@@ -104,6 +78,38 @@ function addProduct(product) {
   } else {
     alert("producto no disponible");
   }
+}
+
+function renderItems(products) {
+  let list = "";
+
+  products.forEach((product) => {
+    const item = `<div class="border ${
+      product.inStock ? "" : "grayscale"
+    } border-gray-300 rounded-lg overflow-hidden">
+                <img class="aspect-video" src="images/${product.image}" alt="${
+      product.name
+    }">
+                <div class="p-2">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-lg font-bold text-gray-900">${
+                          product.name
+                        }</h2>
+                        <p class="text-green-600">$${product.price.toFixed(
+                          2
+                        )}</p>
+                    </div>
+                    
+                    <button id="${
+                      product.id
+                    }" class="product-button rounded-md bg-indigo-600 px-2 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add to Cart</button>
+                </div>
+            </div>`;
+
+    list += item;
+  });
+
+  return list;
 }
 
 function loadCartItems() {
@@ -168,6 +174,26 @@ function events() {
 
       addProduct(product);
     });
+  });
+
+  const searchInput = document.getElementById("search");
+
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.target.value === "") {
+      renderItems(products).innerHTML = "list";
+    }
+    const searchResult = products.filter((product) => {
+      return product.name
+        .toLowerCase()
+        .startsWith(e.target.value.toLowerCase());
+    });
+
+    if (searchResult.length > 0) {
+      const list = renderItems(searchResult);
+      productList.innerHTML = list;
+    } else {
+      productList.innerHTML = "No hay ninguna coincidencia.";
+    }
   });
 }
 
