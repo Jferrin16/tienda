@@ -83,7 +83,18 @@ function addProduct(product) {
 function renderItems(products) {
   let list = "";
 
+  const allDatabaseProducts =
+    JSON.parse(localStorage.getItem("products")) || [];
+
   products.forEach((product) => {
+    const currentProductID = product.id;
+
+    const productInCart = allDatabaseProducts.find(
+      (p) => p.id === currentProductID
+    );
+
+    const label = productInCart ? "In Cart" : "Add to Cart";
+
     const item = `<div class="border ${
       product.inStock ? "" : "grayscale"
     } border-gray-300 rounded-lg overflow-hidden">
@@ -102,7 +113,7 @@ function renderItems(products) {
                     
                     <button id="${
                       product.id
-                    }" class="product-button rounded-md bg-indigo-600 px-2 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add to Cart</button>
+                    }" class="product-button rounded-md bg-indigo-600 px-2 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">${label}</button>
                 </div>
             </div>`;
 
@@ -116,10 +127,20 @@ function loadCartItems() {
   const cart = document.getElementById("cart");
   cart.innerHTML = "";
   const items = JSON.parse(localStorage.getItem("products")) || [];
+  if (items.length === 0) {
+    cart.innerHTML = "<p class='text-red-500 text-2xl'>Carrito vacio </p>";
+    return;
+  }
 
   let list = "";
+  let total = 0;
+  let quantity = 0;
 
   items.forEach(function (item) {
+    total = total + item.price * item.quantity;
+    quantity = quantity + item.quantity;
+
+    // aqui
     const product = `<div class="flex justify-between items-center border-b border-gray-300 py-2">
                 <div class="flex items-center">
                 <img class="w-12 h-12 object-cover rounded-lg" src="images/${
@@ -143,13 +164,29 @@ function loadCartItems() {
     list += product;
   });
 
-  cart.innerHTML = list;
+  const totalHead = `
+    <div class="flex justify-between py-4">
+      <p>Total productos </p>
+      <p id="quantity-total">${quantity}</p>
+    </div>
+  `;
+
+  const totalDiv = `
+    <div class="flex justify-between py-4">
+      <p>Total</p>
+      <p id="cart-total">$${total}</p>
+    </div>
+  `;
+
+  cart.innerHTML = `${totalHead} ${list} ${totalDiv}`;
 
   const removeButtons = document.querySelectorAll(".btn-remove");
 
   removeButtons.forEach(function (button) {
     button.addEventListener("click", function (e) {
       const id = e.target.dataset.id;
+
+      document.getElementById(`${id}`).innerHTML = "Add To Cart";
 
       const products = JSON.parse(localStorage.getItem("products")) || [];
 
@@ -171,6 +208,8 @@ function events() {
       const product = products.find(function (product) {
         return product.id == id;
       });
+
+      e.target.innerHTML = "in cart";
 
       addProduct(product);
     });
