@@ -123,6 +123,11 @@ function renderItems(products) {
   return list;
 }
 
+function getQuantity() {
+  const items = JSON.parse(localStorage.getItem("products")) || [];
+  return items.reduce((acc, item) => acc + item.quantity, 0);
+}
+
 function loadCartItems() {
   const cart = document.getElementById("cart");
   cart.innerHTML = "";
@@ -140,7 +145,6 @@ function loadCartItems() {
     total = total + item.price * item.quantity;
     quantity = quantity + item.quantity;
 
-    // aqui
     const product = `<div class="flex justify-between items-center border-b border-gray-300 py-2">
                 <div class="flex items-center">
                 <img class="w-12 h-12 object-cover rounded-lg" src="images/${
@@ -179,6 +183,8 @@ function loadCartItems() {
   `;
 
   cart.innerHTML = `${totalHead} ${list} ${totalDiv}`;
+
+  document.getElementById("cart-drawer-count").innerHTML = getQuantity();
 
   const removeButtons = document.querySelectorAll(".btn-remove");
 
