@@ -25,26 +25,70 @@
     </style>
   </head>
   <body>
-    <div class="container max-w-5xl mx-auto">
-      <h1 class="text-center text-2xl py-8">Cevicheria Emily</h1>
-      <div class="w-full py-2 px-2 lg:px-0">
-        <input
-          id="search"
-          type="text"
-          class="border border-gray-200 rounded-md p-2 w-full"
-          placeholder="Buscar..."
-        />
+    <div class="container mx-auto">
+      <div class="relative">
+        <h1 class="text-center text-2xl py-8">Cevicheria Emily</h1>
+        <div class="lg:hidden absolute top-0 right-0 p-4">
+          <button id="cart-drawer-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
-      <div
-        id="product-list"
-        class="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 lg:px-0"
-      ></div>
-    </div>
 
-    <div
-      class="lg:w-[280px] lg:h-screen top-0 right-0 border-l border-gray-200 hide md:fixed px-2"
-    >
-      <div id="cart"></div>
+      <div class="grid grid-cols-6 gap-2">
+        <div class="lg:col-span-4 col-span-6">
+          <div class="w-full py-2 px-2 lg:px-0">
+            <input
+              id="search"
+              type="text"
+              class="border border-gray-200 rounded-md p-2 w-full"
+              placeholder="Buscar..."
+            />
+          </div>
+          <div
+            id="product-list"
+            class="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 lg:px-0"
+          ></div>
+        </div>
+        <div
+          id="cart-drawer"
+          class="fixed top-0 right-0 lg:col-span-2 border-l border-gray-200 px-4 bg-white w-full h-full transition-all duration-300 translate-x-full md:translate-x-0 md:w-auto"
+        >
+          <button
+            id="cart-drawer-close"
+            class="block md:hidden w-[24px] h-[24px] absolute top-2 right-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="{1.5}"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <div id="cart" class="mt-16"></div>
+        </div>
+      </div>
     </div>
   </body>
   <script src="./cart.js"></script>

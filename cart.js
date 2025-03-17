@@ -4,7 +4,7 @@ const products = [
     name: "Encebollado",
     price: 3.5,
     image: "encebollado.jpg",
-    inStock: false,
+    inStock: true,
   },
   {
     id: 2,
@@ -178,9 +178,10 @@ function events() {
 
   const searchInput = document.getElementById("search");
 
-  searchInput.addEventListener("keypress", (e) => {
+  searchInput.addEventListener("input", (e) => {
     if (e.target.value === "") {
-      renderItems(products).innerHTML = "list";
+      const list = renderItems(products);
+      productList.innerHTML = list;
     }
     const searchResult = products.filter((product) => {
       return product.name
@@ -194,6 +195,19 @@ function events() {
     } else {
       productList.innerHTML = "No hay ninguna coincidencia.";
     }
+  });
+
+  const cartDrawerButton = document.getElementById("cart-drawer-button");
+  const cartDrawer = document.getElementById("cart-drawer");
+
+  cartDrawerButton.addEventListener("click", function (e) {
+    cartDrawer.classList.toggle("translate-x-full");
+  });
+
+  const cartDrawerClose = document.getElementById("cart-drawer-close");
+
+  cartDrawerClose.addEventListener("click", function (e) {
+    cartDrawer.classList.toggle("translate-x-full");
   });
 }
 
